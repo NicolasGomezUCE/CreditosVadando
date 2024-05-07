@@ -1,17 +1,21 @@
-package co.edu.ucentral.creditsProject.dto;
+package co.edu.ucentral.creditsProject.repostory.entity;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Client{
-    private String id;
-    private String firstName;
-    private String lastName;
+@Entity(name = "Client")
+@Table(name = "CLIENT")
+public class ClientEntity {
 
+    @Id
+    private String id;
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+    @Column(name = "lastName", nullable = false)
+    private String lastName;
 
     public String getId() {
         return id;
@@ -36,6 +40,4 @@ public class Client{
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-
 }

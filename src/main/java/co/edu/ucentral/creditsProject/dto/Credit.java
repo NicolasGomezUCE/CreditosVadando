@@ -13,16 +13,128 @@ import java.sql.Date;
 @AllArgsConstructor
 public class Credit {
 
-    private String id;
-    private boolean active;
+    private int id;
     private double interest;
     private double totalAmount;
     private int monthsTime;
     private Date datePayment;
     private Status status;
     private CreditType creditType;
+
     private Officer officer;
     private Client client;
 
 
+    //Datos client
+    private String idClient;
+    private String firstName;
+    private String lastName;
+
+    //datos exclusivos html
+    private String type;
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public double getInterest() {
+        return interest;
+    }
+
+    public void setInterest(double interest) {
+        this.interest = interest;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public int getMonthsTime() {
+        return monthsTime;
+    }
+
+    public void setMonthsTime(int monthsTime) {
+        this.monthsTime = monthsTime;
+    }
+
+    public Date getDatePayment() {
+        return datePayment;
+    }
+
+    public void setDatePayment(Date datePayment) {
+        this.datePayment = datePayment;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public CreditType getCreditType() {
+        return creditType;
+    }
+
+    public void setCreditType(CreditType creditType) {
+        this.creditType = creditType;
+    }
+
+    public Officer getOfficer() {
+        return officer;
+    }
+
+    public void setOfficer(Officer officer) {
+        this.officer = officer;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public String getIdClient() {
+        return idClient;
+    }
+
+    public void setIdClient(String idClient) {
+        this.idClient = idClient;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }
