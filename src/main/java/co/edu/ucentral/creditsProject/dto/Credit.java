@@ -3,6 +3,7 @@ package co.edu.ucentral.creditsProject.dto;
 import co.edu.ucentral.creditsProject.config.CreditType;
 import co.edu.ucentral.creditsProject.config.Status;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.sql.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Credit {
 
     private int id;

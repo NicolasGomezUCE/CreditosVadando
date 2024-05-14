@@ -2,12 +2,14 @@ package co.edu.ucentral.creditsProject.repostory.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "Client")
 @Table(name = "CLIENT")
+@Builder
 public class ClientEntity {
 
     @Id

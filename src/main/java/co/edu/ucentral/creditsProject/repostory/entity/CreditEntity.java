@@ -6,6 +6,7 @@ import co.edu.ucentral.creditsProject.dto.Client;
 import co.edu.ucentral.creditsProject.dto.Officer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
@@ -15,6 +16,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @Entity(name = "Credit")
 @Table(name = "CREDIT")
+@Builder
 public class CreditEntity {
 
     @Id

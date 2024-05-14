@@ -2,16 +2,17 @@ package co.edu.ucentral.creditsProject.repostory.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "Officer")
 @Table(name = "OFFICER")
+@Builder
 public class OfficerEntity {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private String id;
     @Column(name = "first_name", nullable = false)
     private String firstName;

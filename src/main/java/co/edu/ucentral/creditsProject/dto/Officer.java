@@ -1,12 +1,14 @@
 package co.edu.ucentral.creditsProject.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Officer {
     private String id;
     private String firstName;
