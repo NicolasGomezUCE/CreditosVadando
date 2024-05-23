@@ -34,23 +34,7 @@ public class CreditAdapter implements CreditService {
 
     @Override
     public Credit registerCredit(Credit credit) {
-        switch (credit.getType()){
-            case "HOME":
-                credit.setCreditType(CreditType.HOME);
-                break;
-            case "VEHICLE":
-                credit.setCreditType(CreditType.VEHICLE);
-                break;
-            case "STUDIES":
-                credit.setCreditType(CreditType.STUDIES);
-                break;
-            case "WALLET":
-                credit.setCreditType(CreditType.WALLET);
-                break;
-            case "FREE":
-                credit.setCreditType(CreditType.FREE);
-                break;
-        }
+        credit.setCreditType(getCreditType(credit.getType()));
 
         credit.setInterest(getInterest(credit.getCreditType()));
 
@@ -87,33 +71,31 @@ public class CreditAdapter implements CreditService {
         return total + (total * interest);
     }
 
-
+    @Override
     public double getInterest(CreditType creditType){
-        double x;
-        switch (creditType){
-            case HOME:
-                x = 0.011;
-                break;
-            case VEHICLE:
-                x = 0.017;
-                break;
-            case STUDIES:
-                x = 0.009;
-                break;
-            case WALLET:
-                x = 0.008;
-                break;
-            case FREE:
-                x = 0.015;
-                break;
-            default:
-                x = 0;
-                break;
-        }
 
-        return  x;
+        return switch (creditType) {
+            case HOME -> 0.011;
+            case VEHICLE -> 0.017;
+            case STUDIES -> 0.009;
+            case WALLET -> 0.008;
+            case FREE -> 0.015;
+            default -> 0;
+        };
 
 
+    }
+
+    @Override
+    public CreditType getCreditType(String creditType){
+        return switch (creditType) {
+            case "HOME" -> CreditType.HOME;
+            case "VEHICLE" -> CreditType.VEHICLE;
+            case "STUDIES" -> CreditType.STUDIES;
+            case "WALLET" -> CreditType.WALLET;
+            case "FREE" -> CreditType.FREE;
+            default -> null;
+        };
     }
 
 }
