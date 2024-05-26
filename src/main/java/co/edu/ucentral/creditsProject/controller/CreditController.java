@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @Controller
 public class CreditController {
 
@@ -32,7 +34,7 @@ public class CreditController {
             model.addAttribute("credit", credit);
             firstTimeRequest = false;
             model.addAttribute("firstTime", firstTimeRequest);
-            model.addAttribute("fee",creditService.quotesimulation(credit.getTotalAmount(),creditService.getInterest(creditService.getCreditType(credit.getType())),credit.getMonthsTime()));
+            model.addAttribute("fee",creditService.quotesimulation(credit.getTotalAmount().doubleValue(),creditService.getInterest(creditService.getCreditType(credit.getType())),credit.getMonthsTime()));
             return "radicarCredito";
         }else{
             firstTimeRequest = true;

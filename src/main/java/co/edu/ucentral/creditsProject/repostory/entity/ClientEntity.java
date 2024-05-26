@@ -16,8 +16,12 @@ public class ClientEntity {
     private String id;
     @Column(name = "first_name", nullable = false)
     private String firstName;
-    @Column(name = "lastName", nullable = false)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
+    private String address;
+    private String phone;
+    private String email;
+    private double income;
 
     public String getId() {
         return id;
@@ -41,5 +45,37 @@ public class ClientEntity {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public double getIncome() {
+        return income;
+    }
+
+    public void setIncome(double income) {
+        this.income = income;
     }
 }

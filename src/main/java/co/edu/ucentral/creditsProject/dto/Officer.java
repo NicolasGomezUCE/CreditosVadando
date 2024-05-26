@@ -14,6 +14,8 @@ public class Officer {
     private String firstName;
     private String lastName;
     private String station;
+    private String password;
+
 
     public String getId() {
         return id;
@@ -45,5 +47,13 @@ public class Officer {
 
     public void setStation(String station) {
         this.station = station;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

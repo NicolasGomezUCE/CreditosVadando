@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import co.edu.ucentral.creditsProject.service.CreditService;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -42,8 +43,15 @@ public class CreditAdapter implements CreditService {
         client.setId(credit.getIdClient());
         client.setFirstName(credit.getFirstName());
         client.setLastName(credit.getLastName());
+        client.setEmail(credit.getEmail());
+        client.setIncome(credit.getIncome());
+        client.setAddress(credit.getAddress());
+        client.setPhone(credit.getPhone());
+
+
         credit.setClient(client);
         credit.setStatus(Status.REQUESTED);
+
 
         CreditEntity creditEntity = creditMapper.toCreditEntity(credit);
         creditEntity.setClientId(credit.getClient().getId());

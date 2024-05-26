@@ -62,16 +62,16 @@
     <input th:field="*{lastName}" type="text" id="lastName" required>
 
     <label for="address">Dirección:</label>
-    <input  type="text" id="address" required>
+    <input th:field="*{address}" type="text" id="address" required>
 
-    <label for="phoneNumber">Número de celular:</label>
-    <input  type="text" id="phoneNumber" required>
+    <label for="phone">Número de celular:</label>
+    <input th:field="*{phone}" type="text" id="phone" required>
 
     <label for="email">Correo electrónico:</label>
-    <input type="email" id="email" required>
+    <input th:field="*{email}" type="email" id="email" required>
 
     <label for="income">Salario mensual:</label>
-    <input  type="number" id="income" required>
+    <input th:field="*{income}" type="number" id="income" required>
 
     <label for="type">Tipo de crédito a solicitar:</label>
     <select th:field="*{type}" id="type" required>

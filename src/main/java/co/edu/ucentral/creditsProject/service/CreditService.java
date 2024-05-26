@@ -5,6 +5,7 @@ import co.edu.ucentral.creditsProject.config.CreditType;
 import co.edu.ucentral.creditsProject.dto.Credit;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Component
