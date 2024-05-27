@@ -81,22 +81,62 @@ public class CreditAdapter implements CreditService {
     }
 
     @Override
+    public List<Credit> getAllCredits() {
+        TypeToken<List<Credit>> token = new TypeToken<>(){};
+        List<Credit> credits = mp.map(creditRepository.findAll(),token.getType());
+
+        credits.forEach(credit ->{
+                    if(credit.getOfficerId() != null){
+                        credit.setOfficer(officerService.getOfficer(credit.getOfficerId()));
+                    }
+                }
+        );
+
+
+
+        return setExtraData(credits);
+    }
+
+    @Override
     public List<Credit> getAllCreditsClient(String id) {
-        return null;
+        TypeToken<List<Credit>> token = new TypeToken<>(){};
+        List<Credit> credits = mp.map(creditRepository.findByClientId(id),token.getType());
+
+        credits.forEach(credit ->{
+                    if(credit.getOfficerId() != null){
+                        credit.setOfficer(officerService.getOfficer(credit.getOfficerId()));
+                    }
+        }
+        );
+
+
+
+        return setExtraData(credits);
     }
 
     @Override
     public List<Credit> getAllCreditsOfficer(String id) {
-        return null;
+
+        TypeToken<List<Credit>> token = new TypeToken<>(){};
+        List<Credit> credits = mp.map(creditRepository.findByOfficerId(id),token.getType());
+
+        credits.forEach(credit ->{
+                    if(credit.getOfficerId() != null){
+                        credit.setOfficer(officerService.getOfficer(credit.getOfficerId()));
+                    }
+                }
+        );
+
+        return setExtraData(credits);
+
     }
 
     @Override
     public List<Credit> getApprovingPendingCreditsOfficer() {
         TypeToken<List<Credit>> token = new TypeToken<>(){};
         List<Credit> credits = mp.map(creditRepository.getAllApprovingPending(),token.getType());
-        credits.forEach(credit -> credit.setClient(clientService.findClient(credit.getIdClient())));
 
-        return credits;
+        return setExtraData(credits);
     }
 
     @Override
@@ -158,16 +198,6 @@ public class CreditAdapter implements CreditService {
             String dtStr = String.valueOf(dateCut)+"-"+String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1)+"-"+String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
 
 
-/*
-            Calendar cal = Calendar.getInstance();
-            cal.setTime( new Date(currentTimeInMillis));
-
-            System.out.println("year " + cal.get + " month " + cal.MONTH + " day " + cal.DAY_OF_MONTH);
-
-            cal.set(Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.YEAR)1,dateCut);
-            System.out.println("year " + cal.YEAR + " month " + cal.MONTH + " day " + cal.DAY_OF_MONTH);
-
-**/
             LocalDate localDate = LocalDate.of(Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH)+1,dateCut);
             SimpleDateFormat obj = new SimpleDateFormat("dd-MM-yyyy");
             Date date = Date.valueOf(localDate);
@@ -202,6 +232,13 @@ public class CreditAdapter implements CreditService {
             default:
                 return "Estado desconocido";
         }
+    }
+
+
+    public List<Credit> setExtraData(List<Credit> credits){
+        credits.forEach(credit -> credit.setClient(clientService.findClient(credit.getIdClient())));
+        credits.forEach(credit -> credit.setType(getStatusLabel(credit.getStatus())));
+        return credits;
     }
 
 }
