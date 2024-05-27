@@ -26,4 +26,9 @@ public class ClientAdapter implements ClientService {
         ClientEntity clientEntity = clientMapper.toClientEntity(client);
         clientRepository.save(clientEntity);
     }
+
+    @Override
+    public Client findClient(String id) {
+        return clientMapper.toClient(clientRepository.findById(id).get());
+    }
 }

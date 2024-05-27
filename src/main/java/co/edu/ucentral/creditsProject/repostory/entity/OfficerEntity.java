@@ -19,6 +19,7 @@ public class OfficerEntity {
     @Column(name = "last_name", nullable = false)
     private String lastName;
     private String station;
+    private String password;
 
 
     public String getId() {
@@ -51,5 +52,13 @@ public class OfficerEntity {
 
     public void setStation(String station) {
         this.station = station;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

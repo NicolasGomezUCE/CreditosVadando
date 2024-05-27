@@ -5,20 +5,31 @@ import co.edu.ucentral.creditsProject.config.CreditType;
 import co.edu.ucentral.creditsProject.config.Status;
 import co.edu.ucentral.creditsProject.dto.Client;
 import co.edu.ucentral.creditsProject.dto.Credit;
+import co.edu.ucentral.creditsProject.dto.Officer;
 import co.edu.ucentral.creditsProject.repostory.CreditRepository;
 import co.edu.ucentral.creditsProject.repostory.entity.CreditEntity;
 import co.edu.ucentral.creditsProject.repostory.mapper.CreditToDto;
 import co.edu.ucentral.creditsProject.service.ClientService;
 import co.edu.ucentral.creditsProject.service.CreditService;
+import co.edu.ucentral.creditsProject.service.OfficerService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import co.edu.ucentral.creditsProject.service.CreditService;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
+
+import static co.edu.ucentral.creditsProject.config.Utilities.ID_LOG_IN;
 
 @Service
 @RequiredArgsConstructor
@@ -32,18 +43,32 @@ public class CreditAdapter implements CreditService {
     @Autowired
     ClientService clientService;
 
+    @Autowired
+    OfficerService officerService;
+
+    @Autowired
+    ModelMapper mp;
+
     @Override
     public Credit registerCredit(Credit credit) {
         credit.setCreditType(getCreditType(credit.getType()));
 
         credit.setInterest(getInterest(credit.getCreditType()));
+        credit.setCurrentAmount(credit.getTotalAmount());
 
         Client client = new Client();
         client.setId(credit.getIdClient());
         client.setFirstName(credit.getFirstName());
         client.setLastName(credit.getLastName());
+        client.setEmail(credit.getEmail());
+        client.setIncome(credit.getIncome());
+        client.setAddress(credit.getAddress());
+        client.setPhone(credit.getPhone());
+
+
         credit.setClient(client);
         credit.setStatus(Status.REQUESTED);
+
 
         CreditEntity creditEntity = creditMapper.toCreditEntity(credit);
         creditEntity.setClientId(credit.getClient().getId());
@@ -63,6 +88,15 @@ public class CreditAdapter implements CreditService {
     @Override
     public List<Credit> getAllCreditsOfficer(String id) {
         return null;
+    }
+
+    @Override
+    public List<Credit> getApprovingPendingCreditsOfficer() {
+        TypeToken<List<Credit>> token = new TypeToken<>(){};
+        List<Credit> credits = mp.map(creditRepository.getAllApprovingPending(),token.getType());
+        credits.forEach(credit -> credit.setClient(clientService.findClient(credit.getIdClient())));
+
+        return credits;
     }
 
     @Override
@@ -96,6 +130,78 @@ public class CreditAdapter implements CreditService {
             case "FREE" -> CreditType.FREE;
             default -> null;
         };
+    }
+
+    @Override
+    public Credit getCredit(int id) {
+        System.out.println("entra getCredit");
+        Credit credit = mp.map(creditRepository.findById(id).orElse(null),Credit.class);
+        credit.setClient(clientService.findClient(credit.getIdClient()));
+        credit.setType(getStatusLabel(credit.getStatus()));
+        if(credit.getOfficerId() != null){
+            credit.setOfficer(officerService.getOfficer(credit.getOfficerId()));
+        }
+
+        return credit;
+    }
+
+
+
+    @Override
+    public Credit approveCredit(boolean approve, int id, int dateCut) {
+        Credit credit = getCredit(id);
+
+        if (approve) {
+            credit.setStatus(Status.ACTIVE);
+
+
+            String dtStr = String.valueOf(dateCut)+"-"+String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1)+"-"+String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+
+
+/*
+            Calendar cal = Calendar.getInstance();
+            cal.setTime( new Date(currentTimeInMillis));
+
+            System.out.println("year " + cal.get + " month " + cal.MONTH + " day " + cal.DAY_OF_MONTH);
+
+            cal.set(Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.YEAR)1,dateCut);
+            System.out.println("year " + cal.YEAR + " month " + cal.MONTH + " day " + cal.DAY_OF_MONTH);
+
+**/
+            LocalDate localDate = LocalDate.of(Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH)+1,dateCut);
+            SimpleDateFormat obj = new SimpleDateFormat("dd-MM-yyyy");
+            Date date = Date.valueOf(localDate);
+
+
+
+            credit.setDatePayment(date);
+
+
+        }else{
+            credit.setStatus(Status.CANCELLED);
+        }
+        credit.setOfficerId(ID_LOG_IN);
+        mp.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        CreditEntity ce = mp.map(credit,CreditEntity.class);
+        ce.setClientId(credit.getIdClient());
+        creditRepository.save(ce);
+
+        return credit;
+    }
+
+    public String getStatusLabel(Status status) {
+        switch (status) {
+            case REQUESTED:
+                return "Pendiente de aprobacion";
+            case ACTIVE:
+                return "Activo/en curso";
+            case CANCELLED:
+                return "No aprobado";
+            case TERMINATED:
+                return "Finalizado";
+            default:
+                return "Estado desconocido";
+        }
     }
 
 }

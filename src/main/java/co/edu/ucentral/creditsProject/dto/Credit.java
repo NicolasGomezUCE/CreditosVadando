@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 @Data
@@ -17,7 +18,8 @@ public class Credit {
 
     private int id;
     private double interest;
-    private double totalAmount;
+    private BigDecimal totalAmount;
+    private BigDecimal currentAmount;
     private int monthsTime;
     private Date datePayment;
     private Status status;
@@ -31,6 +33,12 @@ public class Credit {
     private String idClient;
     private String firstName;
     private String lastName;
+    private String address;
+    private String phone;
+    private String email;
+    private BigDecimal income;
+
+    private String officerId;
 
     //datos exclusivos html
     private String type;
@@ -52,11 +60,11 @@ public class Credit {
         this.interest = interest;
     }
 
-    public double getTotalAmount() {
+    public BigDecimal getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(double totalAmount) {
+    public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
     }
 
@@ -138,5 +146,53 @@ public class Credit {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public BigDecimal getIncome() {
+        return income;
+    }
+
+    public void setIncome(BigDecimal income) {
+        this.income = income;
+    }
+
+    public BigDecimal getCurrentAmount() {
+        return currentAmount;
+    }
+
+    public void setCurrentAmount(BigDecimal currentAmount) {
+        this.currentAmount = currentAmount;
+    }
+
+    public String getOfficerId() {
+        return officerId;
+    }
+
+    public void setOfficerId(String officerId) {
+        this.officerId = officerId;
     }
 }

@@ -14,7 +14,7 @@ import java.sql.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "Credit")
+@Entity
 @Table(name = "CREDIT")
 @Builder
 public class CreditEntity {
@@ -26,6 +26,8 @@ public class CreditEntity {
     private double interest;
     @Column(name = "total_amount", nullable = false)
     private double totalAmount;
+    @Column(name = "current_amount", nullable = false)
+    private double currentAmount;
     @Column(name = "months_time", nullable = false)
     private int monthsTime;
     @Column(name = "date_payment")
@@ -111,5 +113,13 @@ public class CreditEntity {
 
     public void setClientId(String clientId) {
         this.clientId = clientId;
+    }
+
+    public double getCurrentAmount() {
+        return currentAmount;
+    }
+
+    public void setCurrentAmount(double currentAmount) {
+        this.currentAmount = currentAmount;
     }
 }

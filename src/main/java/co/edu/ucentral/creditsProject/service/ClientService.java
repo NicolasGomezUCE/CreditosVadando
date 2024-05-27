@@ -7,4 +7,6 @@ import org.springframework.stereotype.Component;
 public interface ClientService {
     public void saveClient(Client client);
 
+    public Client findClient(String id);
+
 }
