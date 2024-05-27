@@ -16,9 +16,16 @@ public interface CreditService {
 
     public List<Credit> getAllCreditsOfficer(String id);
 
+    public List<Credit> getApprovingPendingCreditsOfficer();
+
+
     public double quotesimulation(double totalAmount, double interest, double monthsTime);
 
     public double getInterest(CreditType creditType);
 
     public CreditType getCreditType(String creditType);
+
+    public Credit getCredit(int id);
+
+    public Credit approveCredit(boolean approve, int id, int dateCut);
 }

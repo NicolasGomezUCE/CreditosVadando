@@ -18,7 +18,7 @@ public class CreditController {
     boolean firstTimeRequest = true;
 
     @GetMapping("/credit")
-    public String mostrarFormulario(Model model){
+    public String showForm(Model model){
         Credit credit = new Credit();
         model.addAttribute("credit", credit);
         firstTimeRequest = true;
@@ -44,5 +44,24 @@ public class CreditController {
 
     }
 
+    @GetMapping("/ApprovingCredit")
+    public String getApprovingPendingCreditos(Model model){
+        model.addAttribute("credits", creditService.getApprovingPendingCreditsOfficer());
+        return "CreditsOfficerApproving";
+    }
 
+    @GetMapping("/creditApprove")
+    public String getCreditApprove(@RequestParam("id") int id, Model model) {
+        System.out.println("entra controller");
+        model.addAttribute("credit",  creditService.getCredit(id));
+        return "CreditApproving";
+    }
+
+    @PostMapping("/Approve")
+    public String approveCredit(@RequestParam("id") int id,
+                                @RequestParam("dateCutoff") int dateCutoff,
+                                @RequestParam(value = "approve", defaultValue = "false") boolean approve) {
+        creditService.approveCredit(approve,id,dateCutoff);
+        return "redirect:/Dashboard";
+    }
 }

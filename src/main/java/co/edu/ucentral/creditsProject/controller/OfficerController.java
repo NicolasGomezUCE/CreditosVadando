@@ -32,7 +32,7 @@ public class OfficerController {
         }
     }
 
-    @PostMapping("/login")
+    @PostMapping("/Dashboard")
     public String login(@ModelAttribute("login") Login login, Model model){
         if(officerService.login(login.getUser(),login.getPassword())){
             Utilities.IS_LOGED_IN = true;
@@ -42,6 +42,20 @@ public class OfficerController {
             return "Dashboard";
         }else {
             model.addAttribute("error",false);
+            return "Login";
+        }
+    }
+
+    @GetMapping("/Dashboard")
+    public String loginGet(Model model){
+        if(Utilities.IS_LOGED_IN){
+            model.addAttribute("officer",officerService.getOfficer(Utilities.ID_LOG_IN));
+            return "Dashboard";
+        }else{
+            Login login = new Login();
+
+            model.addAttribute("login",login);
+            model.addAttribute("error",true);
             return "Login";
         }
     }
