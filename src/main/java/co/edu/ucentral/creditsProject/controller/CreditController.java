@@ -1,5 +1,6 @@
 package co.edu.ucentral.creditsProject.controller;
 
+import co.edu.ucentral.creditsProject.config.Utilities;
 import co.edu.ucentral.creditsProject.dto.Credit;
 import co.edu.ucentral.creditsProject.service.CreditService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Controller
 public class CreditController {
@@ -63,5 +65,31 @@ public class CreditController {
                                 @RequestParam(value = "approve", defaultValue = "false") boolean approve) {
         creditService.approveCredit(approve,id,dateCutoff);
         return "redirect:/Dashboard";
+    }
+
+    @GetMapping("/creditsClient")
+    public String getCredits(Model model, @RequestParam(value = "clientId", required = false) String clientId) {
+        List<Credit> credits;
+        if (clientId != null && !clientId.isEmpty()) {
+            credits = creditService.getAllCreditsClient(clientId);
+        } else {
+            credits = creditService.getAllCredits();
+        }
+        model.addAttribute("credits", credits);
+        return "CreditsClient";
+    }
+
+    @GetMapping("/creditsOfficer")
+    public String getCreditsOfficer(Model model) {
+        List<Credit> credits;
+
+        if(Utilities.IS_LOGED_IN){
+            credits = creditService.getAllCreditsOfficer(Utilities.ID_LOG_IN);
+            model.addAttribute("credits", credits);
+            return "CreditsClient";
+        }else{
+            return "redirect:/Login";
+        }
+
     }
 }

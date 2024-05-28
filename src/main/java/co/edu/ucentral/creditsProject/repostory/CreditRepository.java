@@ -12,4 +12,8 @@ public interface CreditRepository extends JpaRepository<CreditEntity, Integer> {
 
     @Query(value = "SELECT c FROM CreditEntity c WHERE c.status = 'REQUESTED'")
     List<CreditEntity> getAllApprovingPending();
+
+
+    List<CreditEntity> findByClientId(String clientId);
+    List<CreditEntity> findByOfficerId(String officerId);
 }

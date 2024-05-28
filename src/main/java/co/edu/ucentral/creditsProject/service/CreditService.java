@@ -12,6 +12,7 @@ import java.util.List;
 public interface CreditService {
     public Credit registerCredit(Credit credit);
 
+    public List<Credit> getAllCredits();
     public List<Credit> getAllCreditsClient(String id);
 
     public List<Credit> getAllCreditsOfficer(String id);
