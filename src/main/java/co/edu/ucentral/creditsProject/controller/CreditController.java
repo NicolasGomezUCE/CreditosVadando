@@ -56,6 +56,10 @@ public class CreditController {
     public String getCreditApprove(@RequestParam("id") int id, Model model) {
         System.out.println("entra controller");
         model.addAttribute("credit",  creditService.getCredit(id));
+        model.addAttribute("incomeString",creditService.getCredit(id).getClient().getIncome().toPlainString());
+        model.addAttribute("totalString",creditService.getCredit(id).getTotalAmount().toPlainString());
+        model.addAttribute("currentString",creditService.getCredit(id).getCurrentAmount().toPlainString());
+
         return "CreditApproving";
     }
 
@@ -86,10 +90,30 @@ public class CreditController {
         if(Utilities.IS_LOGED_IN){
             credits = creditService.getAllCreditsOfficer(Utilities.ID_LOG_IN);
             model.addAttribute("credits", credits);
-            return "CreditsClient";
+            return "CreditsOfficer";
         }else{
-            return "redirect:/Login";
+            return "redirect:/login";
         }
 
+    }
+
+    @GetMapping("/creditClient")
+    public String getCreditClient(Model model, @RequestParam(value = "id", required = false) int id){
+        model.addAttribute("credit",  creditService.getCredit(id));
+        model.addAttribute("incomeString",creditService.getCredit(id).getClient().getIncome().toPlainString());
+        model.addAttribute("totalString",creditService.getCredit(id).getTotalAmount().toPlainString());
+        model.addAttribute("currentString",creditService.getCredit(id).getCurrentAmount().toPlainString());
+
+        return "CreditClient";
+    }
+
+    @GetMapping("/creditOfficer")
+    public String getCreditOfficer(Model model, @RequestParam(value = "id", required = false) int id){
+        model.addAttribute("credit",  creditService.getCredit(id));
+        model.addAttribute("incomeString",creditService.getCredit(id).getClient().getIncome().toPlainString());
+        model.addAttribute("totalString",creditService.getCredit(id).getTotalAmount().toPlainString());
+        model.addAttribute("currentString",creditService.getCredit(id).getCurrentAmount().toPlainString());
+
+        return "CreditOfficer";
     }
 }

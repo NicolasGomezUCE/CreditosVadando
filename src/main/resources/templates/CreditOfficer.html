@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Aprobar credito</title>
+    <title>Informacion de credito</title>
     <style>
         /* Styles for Showcase */
         .centered {
@@ -51,8 +51,6 @@
     background-color: #45a049;
 }
 
-
-
     </style>
 
 </head>
@@ -85,7 +83,7 @@
             </p>
             <p>
                 <span>Fecha de Corte:</span>
-                <span th:text="${credit.datePayment}">Fecha de Corte</span>
+                <span th:text="${credit.datePayment}">Ninguna todavia</span>
             </p>
             <p>
                 <span>Estado:</span>
@@ -136,40 +134,12 @@
             </p>
         </div>
 
-        <hr>
-        <div class="centered-button">
-            <form th:action="@{'/Approve?id=' + ${credit.id}}" method="post">
-                <input type="radio" id="approveTrue" name="approve" value="true">
-                <label for="approveTrue">Aprobar</label>
-                <input type="radio" id="approveFalse" name="approve" value="false">
-                <label for="approveFalse">No aprobar</label>
-                <br>
-                <label for="dateCutoff">Fecha de Corte:</label>
-                <select id="dateCutoff" name="dateCutoff">
-                    <option value="9">9</option>
-                    <option value="21">21</option>
-                </select>
-                <br>
-                <button type="submit" class="button">Enviar</button>
-            </form>
-            <hr>
-            <button type="button" th:onclick="|window.location.href='@{/ApprovingCredit}'|">Regresar</button>
 
-        </div>
+        <button type="button" th:onclick="|window.location.href='@{/creditsOfficer}'|">Regresar</button>
 
     </div>
 </div>
 
 
-<script>
-    // JavaScript to enable/disable the "Fecha de Corte" dropdown based on radio button selection
-    document.querySelectorAll('input[name="approveCredit"]').forEach(function(radio) {
-        radio.addEventListener('change', function() {
-            var fechaCorte = document.getElementById('fechaCorte');
-            fechaCorte.disabled = this.value !== 'yes';
-        });
-    });
-
-</script>
 </body>
 </html>

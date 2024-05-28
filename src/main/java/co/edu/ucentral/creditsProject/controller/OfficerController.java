@@ -19,43 +19,56 @@ public class OfficerController {
     OfficerService officerService;
 
     @GetMapping("/login")
-    public String ShowLogin(Model model){
-        if(Utilities.IS_LOGED_IN){
-            model.addAttribute("officer",officerService.getOfficer(Utilities.ID_LOG_IN));
+    public String ShowLogin(Model model) {
+        if (Utilities.IS_LOGED_IN) {
+            model.addAttribute("officer", officerService.getOfficer(Utilities.ID_LOG_IN));
             return "Dashboard";
-        }else{
+        } else {
             Login login = new Login();
 
-            model.addAttribute("login",login);
-            model.addAttribute("error",true);
+            model.addAttribute("login", login);
+            model.addAttribute("error", true);
             return "Login";
         }
     }
 
+
+    @PostMapping("/logout")
+    public String Logout(Model model) {
+
+            Login login = new Login();
+            Utilities.ID_LOG_IN = "";
+            Utilities.IS_LOGED_IN = false;
+            model.addAttribute("login", login);
+
+            return "Login";
+
+    }
+
     @PostMapping("/Dashboard")
-    public String login(@ModelAttribute("login") Login login, Model model){
-        if(officerService.login(login.getUser(),login.getPassword())){
+    public String login(@ModelAttribute("login") Login login, Model model) {
+        if (officerService.login(login.getUser(), login.getPassword())) {
             Utilities.IS_LOGED_IN = true;
             Utilities.ID_LOG_IN = login.getUser();
 
-            model.addAttribute("officer",officerService.getOfficer(Utilities.ID_LOG_IN));
+            model.addAttribute("officer", officerService.getOfficer(Utilities.ID_LOG_IN));
             return "Dashboard";
-        }else {
-            model.addAttribute("error",false);
+        } else {
+            model.addAttribute("error", false);
             return "Login";
         }
     }
 
     @GetMapping("/Dashboard")
-    public String loginGet(Model model){
-        if(Utilities.IS_LOGED_IN){
-            model.addAttribute("officer",officerService.getOfficer(Utilities.ID_LOG_IN));
+    public String loginGet(Model model) {
+        if (Utilities.IS_LOGED_IN) {
+            model.addAttribute("officer", officerService.getOfficer(Utilities.ID_LOG_IN));
             return "Dashboard";
-        }else{
+        } else {
             Login login = new Login();
 
-            model.addAttribute("login",login);
-            model.addAttribute("error",true);
+            model.addAttribute("login", login);
+            model.addAttribute("error", true);
             return "Login";
         }
     }
