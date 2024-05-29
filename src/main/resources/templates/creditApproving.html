@@ -136,7 +136,7 @@
 
         <hr>
         <div class="centered-button">
-            <form th:action="@{'/Approve?id=' + ${credit.id}}" method="post">
+            <form th:action="@{'/approve?id=' + ${credit.id}}" method="post">
                 <input type="radio" id="approveTrue" name="approve" value="true">
                 <label for="approveTrue">Aprobar</label>
                 <input type="radio" id="approveFalse" name="approve" value="false">

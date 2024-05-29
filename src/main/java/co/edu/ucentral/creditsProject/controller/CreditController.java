@@ -46,25 +46,25 @@ public class CreditController {
 
     }
 
-    @GetMapping("/ApprovingCredit")
+    @GetMapping("/approvingCredit")
     public String getApprovingPendingCreditos(Model model){
         model.addAttribute("credits", creditService.getApprovingPendingCreditsOfficer());
-        return "CreditsOfficerApproving";
+        return "creditsOfficerApproving";
     }
 
     @GetMapping("/creditApprove")
     public String getCreditApprove(@RequestParam("id") int id, Model model) {
         System.out.println("entra controller");
         model.addAttribute("credit",  creditService.getCredit(id));
-        return "CreditApproving";
+        return "creditApproving";
     }
 
-    @PostMapping("/Approve")
+    @PostMapping("/approve")
     public String approveCredit(@RequestParam("id") int id,
                                 @RequestParam("dateCutoff") int dateCutoff,
                                 @RequestParam(value = "approve", defaultValue = "false") boolean approve) {
         creditService.approveCredit(approve,id,dateCutoff);
-        return "redirect:/Dashboard";
+        return "redirect:/dashboard";
     }
 
     @GetMapping("/creditsClient")
@@ -76,7 +76,7 @@ public class CreditController {
             credits = creditService.getAllCredits();
         }
         model.addAttribute("credits", credits);
-        return "CreditsClient";
+        return "creditsClient";
     }
 
     @GetMapping("/creditsOfficer")
@@ -88,7 +88,7 @@ public class CreditController {
             model.addAttribute("credits", credits);
             return "CreditsClient";
         }else{
-            return "redirect:/Login";
+            return "redirect:/login";
         }
 
     }

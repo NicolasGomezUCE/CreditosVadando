@@ -22,41 +22,41 @@ public class OfficerController {
     public String ShowLogin(Model model){
         if(Utilities.IS_LOGED_IN){
             model.addAttribute("officer",officerService.getOfficer(Utilities.ID_LOG_IN));
-            return "Dashboard";
+            return "dashboard";
         }else{
             Login login = new Login();
 
             model.addAttribute("login",login);
             model.addAttribute("error",true);
-            return "Login";
+            return "login";
         }
     }
 
-    @PostMapping("/Dashboard")
+    @PostMapping("/dashboard")
     public String login(@ModelAttribute("login") Login login, Model model){
         if(officerService.login(login.getUser(),login.getPassword())){
             Utilities.IS_LOGED_IN = true;
             Utilities.ID_LOG_IN = login.getUser();
 
             model.addAttribute("officer",officerService.getOfficer(Utilities.ID_LOG_IN));
-            return "Dashboard";
+            return "dashboard";
         }else {
             model.addAttribute("error",false);
-            return "Login";
+            return "login";
         }
     }
 
-    @GetMapping("/Dashboard")
+    @GetMapping("/dashboard")
     public String loginGet(Model model){
         if(Utilities.IS_LOGED_IN){
             model.addAttribute("officer",officerService.getOfficer(Utilities.ID_LOG_IN));
-            return "Dashboard";
+            return "dashboard";
         }else{
             Login login = new Login();
 
             model.addAttribute("login",login);
             model.addAttribute("error",true);
-            return "Login";
+            return "login";
         }
     }
 }
