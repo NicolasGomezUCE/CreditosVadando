@@ -60,7 +60,7 @@ public class CreditController {
         model.addAttribute("totalString",creditService.getCredit(id).getTotalAmount().toPlainString());
         model.addAttribute("currentString",creditService.getCredit(id).getCurrentAmount().toPlainString());
 
-        return "CreditApproving";
+        return "creditApproving";
     }
 
     @PostMapping("/approve")
@@ -90,7 +90,7 @@ public class CreditController {
         if(Utilities.IS_LOGED_IN){
             credits = creditService.getAllCreditsOfficer(Utilities.ID_LOG_IN);
             model.addAttribute("credits", credits);
-            return "CreditsClient";
+            return "creditsClient";
         }else{
             return "redirect:/login";
         }
