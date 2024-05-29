@@ -13,7 +13,7 @@
 
     /* Set gray background color and 100% height */
     .sidenav {
-      background-color: #fff;
+      background-color: #f4f4f4;
       height: 100%;
       padding: 20px;
       border-right: 1px solid #ddd;
@@ -29,6 +29,9 @@
     .nav-pills > li > a {
         color: #45a049;
         font-size: 20px;
+        border: 1px solid #ddd; /* Add border to list elements */
+        border-radius: 5px; /* Add border radius */
+        margin-bottom: 5px; /* Add margin bottom */
     }
 
     /* On small screens, set height to 'auto' for the grid */
@@ -59,17 +62,27 @@
 <div class="container-fluid">
     <div class="row content">
         <div class="col-sm-3 sidenav hidden-xs">
-            <h2>Logo</h2>
+            <h2 class="list-heading">Creditos Vadando</h2> <!-- Change "Logo" to "Creditos Vadando" in green -->
             <ul class="nav nav-pills nav-stacked">
-                <li class="active" th:text="Bienvenido+ ' '+${officer.firstName}"></li>
-                <li><a class="list" href="#" th:href="@{/creditsOfficer}">Ver creditos asignados</a></li>
-                <li><a class="list" href="#" th:href="@{/ApprovingCredit}">Aprobacion de creditos</a></li>
-                <li><a class="list" href="#" th:href="@{/ChangePassword}">Modificar contraseña</a></li>
-            </ul><br>
+                <li class="active" th:text="'Bienvenido ' + ${officer.firstName}" style="font-size: 20px;"></li> <!-- Make "Bienvenido + name" text bigger -->
+                <li><a class="list" href="#" th:href="@{/creditsOfficer}" style="font-size: 20px;">Ver creditos asignados</a></li>
+                <li><a class="list" href="#" th:href="@{/ApprovingCredit}" style="font-size: 20px;">Aprobacion de creditos</a></li>
+                <li><a class="list" href="#" th:href="@{/ChangePassword}" style="font-size: 20px;">Modificar contraseña (WIP)</a></li>
+            </ul>
+            <br>
+            <!-- Add "Cerrar sesión" and "Volver al inicio" buttons -->
+            <div style="margin-top: 20px;"> <!-- Add margin-top for spacing -->
+                <form th:action="@{/logout}" method="post" style="display: inline-block; margin-right: 10px;"> <!-- Use inline-block to display buttons side by side and add margin-right for spacing -->
+                    <button class="btn btn-success" type="submit">Cerrar sesión</button>
+                </form>
+                <a th:href="@{/}" class="btn btn-success" style="margin-left: 10px;">Volver al inicio</a> <!-- Add margin-left for spacing -->
+            </div>
         </div>
         <br>
 
-        <div class="col-sm-9">
+
+
+        <!--<div class="col-sm-9">
             <div class="well">
                 <h4>Dashboard</h4>
                 <p>Some text..</p>
@@ -135,7 +148,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>
 </body>
