@@ -90,7 +90,7 @@ public class CreditController {
         if(Utilities.IS_LOGED_IN){
             credits = creditService.getAllCreditsOfficer(Utilities.ID_LOG_IN);
             model.addAttribute("credits", credits);
-            return "creditsClient";
+            return "creditsOfficer";
         }else{
             return "redirect:/login";
         }
