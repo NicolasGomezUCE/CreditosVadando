@@ -56,7 +56,11 @@ public class CreditController {
     public String getCreditApprove(@RequestParam("id") int id, Model model) {
         System.out.println("entra controller");
         model.addAttribute("credit",  creditService.getCredit(id));
-        return "creditApproving";
+        model.addAttribute("incomeString",creditService.getCredit(id).getClient().getIncome().toPlainString());
+        model.addAttribute("totalString",creditService.getCredit(id).getTotalAmount().toPlainString());
+        model.addAttribute("currentString",creditService.getCredit(id).getCurrentAmount().toPlainString());
+
+        return "CreditApproving";
     }
 
     @PostMapping("/approve")
@@ -91,5 +95,25 @@ public class CreditController {
             return "redirect:/login";
         }
 
+    }
+
+    @GetMapping("/creditClient")
+    public String getCreditClient(Model model, @RequestParam(value = "id", required = false) int id){
+        model.addAttribute("credit",  creditService.getCredit(id));
+        model.addAttribute("incomeString",creditService.getCredit(id).getClient().getIncome().toPlainString());
+        model.addAttribute("totalString",creditService.getCredit(id).getTotalAmount().toPlainString());
+        model.addAttribute("currentString",creditService.getCredit(id).getCurrentAmount().toPlainString());
+
+        return "creditClient";
+    }
+
+    @GetMapping("/creditOfficer")
+    public String getCreditOfficer(Model model, @RequestParam(value = "id", required = false) int id){
+        model.addAttribute("credit",  creditService.getCredit(id));
+        model.addAttribute("incomeString",creditService.getCredit(id).getClient().getIncome().toPlainString());
+        model.addAttribute("totalString",creditService.getCredit(id).getTotalAmount().toPlainString());
+        model.addAttribute("currentString",creditService.getCredit(id).getCurrentAmount().toPlainString());
+
+        return "creditOfficer";
     }
 }
