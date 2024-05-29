@@ -59,4 +59,16 @@ public class OfficerController {
             return "login";
         }
     }
+
+    @PostMapping("/logout")
+    public String Logout(Model model) {
+
+        Login login = new Login();
+        Utilities.ID_LOG_IN = "";
+        Utilities.IS_LOGED_IN = false;
+        model.addAttribute("login", login);
+
+        return "login";
+
+    }
 }
