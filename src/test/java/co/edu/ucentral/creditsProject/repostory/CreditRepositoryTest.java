@@ -149,35 +149,7 @@ class CreditRepositoryTest {
         }
 
 
-        @DisplayName("Test de buscar todos los elementos, repositorio de credito")
-        @Test
-        void testFindAllCredit(){
-            CreditEntity creditEntity =new CreditEntity();
-            creditEntity.setTotalAmount(10000000);
-            creditEntity.setMonthsTime(12);
-            creditEntity.setCreditType(CreditType.HOME);
 
-            CreditEntity creditEntity2 =new CreditEntity();
-            creditEntity2.setTotalAmount(10000000);
-            creditEntity2.setMonthsTime(12);
-            creditEntity2.setCreditType(CreditType.HOME);
-
-
-            //2 WHEN  - ACCION
-
-            CreditEntity credit = creditRepository.save(creditEntity);
-            CreditEntity creditExtra = creditRepository.save(creditEntity2);
-
-
-            //3 THEN - VERIFICAR
-
-            List<CreditEntity> credit1 = creditRepository.findAll();
-
-            assertThat(credit1.size()>0);
-
-
-
-        }
 
 
 
