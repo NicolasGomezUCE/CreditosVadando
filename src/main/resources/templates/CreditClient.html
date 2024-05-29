@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Aprobar credito</title>
+    <title>Informacion de credito</title>
     <style>
         /* Styles for Showcase */
         .centered {
@@ -38,6 +38,35 @@
             margin-top: 20px;
         }
 
+        .centered-button form {
+            display: inline-block;
+            text-align: left;
+        }
+
+        .centered-button .radio-group {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .centered-button .radio-group label {
+            margin-left: 5px;
+            font-weight: bold;
+        }
+
+        .centered-button .button {
+            display: block;
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+        }
+
         button {
     background-color: #4CAF50;
     color: white;
@@ -50,8 +79,10 @@
 .button:hover {
     background-color: #45a049;
 }
-
-
+.centered-button h2 {
+            font-size: 24px;
+            color: #4CAF50;
+        }
 
     </style>
 
@@ -85,7 +116,7 @@
             </p>
             <p>
                 <span>Fecha de Corte:</span>
-                <span th:text="${credit.datePayment}">Fecha de Corte</span>
+                <span th:text="${credit.datePayment}">Ninguna todavia</span>
             </p>
             <p>
                 <span>Estado:</span>
@@ -136,24 +167,21 @@
             </p>
         </div>
 
-        <hr>
+        <h2>Pago de Credito</h2>
         <div class="centered-button">
-            <form th:action="@{'/approve?id=' + ${credit.id}}" method="post">
-                <input type="radio" id="approveTrue" name="approve" value="true">
-                <label for="approveTrue">Aprobar</label>
-                <input type="radio" id="approveFalse" name="approve" value="false">
-                <label for="approveFalse">No aprobar</label>
-                <br>
-                <label for="dateCutoff">Fecha de Corte:</label>
-                <select id="dateCutoff" name="dateCutoff">
-                    <option value="9">9</option>
-                    <option value="21">21</option>
-                </select>
-                <br>
-                <button type="submit" class="button">Enviar</button>
+            <form th:action="@{'/Payment?id=' + ${credit.id}}" method="post">
+                <div class="radio-group">
+                    <input type="radio" id="quoteTrue" name="quote" value="true">
+                    <label for="quoteTrue">Pago mensual</label>
+                </div>
+                <div class="radio-group">
+                    <input type="radio" id="quoteFalse" name="quote" value="false">
+                    <label for="quoteFalse">Pago total</label>
+                </div>
+                <button type="submit" class="button">Pagar</button>
+                <hr>
+                <button type="button" th:onclick="|window.location.href='@{/creditsClient(id=${credit.id})}'|">Regresar</button>
             </form>
-            <hr>
-            <button type="button" th:onclick="|window.location.href='@{/ApprovingCredit}'|">Regresar</button>
 
         </div>
 
@@ -161,15 +189,5 @@
 </div>
 
 
-<script>
-    // JavaScript to enable/disable the "Fecha de Corte" dropdown based on radio button selection
-    document.querySelectorAll('input[name="approveCredit"]').forEach(function(radio) {
-        radio.addEventListener('change', function() {
-            var fechaCorte = document.getElementById('fechaCorte');
-            fechaCorte.disabled = this.value !== 'yes';
-        });
-    });
-
-</script>
 </body>
 </html>

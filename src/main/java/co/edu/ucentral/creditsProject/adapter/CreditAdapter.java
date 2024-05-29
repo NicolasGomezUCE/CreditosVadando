@@ -198,7 +198,7 @@ public class CreditAdapter implements CreditService {
             String dtStr = String.valueOf(dateCut)+"-"+String.valueOf(Calendar.getInstance().get(Calendar.MONTH)+1)+"-"+String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
 
 
-            LocalDate localDate = LocalDate.of(Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH)+1,dateCut);
+            LocalDate localDate = LocalDate.of(Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH)+2,dateCut);
             SimpleDateFormat obj = new SimpleDateFormat("dd-MM-yyyy");
             Date date = Date.valueOf(localDate);
 
