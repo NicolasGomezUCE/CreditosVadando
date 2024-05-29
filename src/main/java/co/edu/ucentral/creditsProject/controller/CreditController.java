@@ -2,6 +2,7 @@ package co.edu.ucentral.creditsProject.controller;
 
 import co.edu.ucentral.creditsProject.config.Utilities;
 import co.edu.ucentral.creditsProject.dto.Credit;
+import co.edu.ucentral.creditsProject.dto.Login;
 import co.edu.ucentral.creditsProject.service.CreditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -66,9 +67,18 @@ public class CreditController {
     @PostMapping("/approve")
     public String approveCredit(@RequestParam("id") int id,
                                 @RequestParam("dateCutoff") int dateCutoff,
-                                @RequestParam(value = "approve", defaultValue = "false") boolean approve) {
-        creditService.approveCredit(approve,id,dateCutoff);
-        return "redirect:/dashboard";
+                                @RequestParam(value = "approve", defaultValue = "false") boolean approve, Model model) {
+
+        if(Utilities.IS_LOGED_IN){
+            creditService.approveCredit(approve,id,dateCutoff);
+            return "redirect:/dashboard";
+        }else{
+            Login login = new Login();
+
+            model.addAttribute("login",login);
+            return "login";
+        }
+
     }
 
     @GetMapping("/creditsClient")
